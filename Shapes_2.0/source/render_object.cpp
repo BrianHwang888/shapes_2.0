@@ -1,4 +1,6 @@
 #include"../header/render_object.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include"../header/stb_image.h"
 
 /*----- Color Related Classes -----*/
 color_attribute::color_attribute(glm::vec4 color, int vertices) {
@@ -22,18 +24,22 @@ texture_attribute::texture_attribute(char* texture_path, int width, int height, 
 	this->height = height;
 	nr_channels = num_color_channels;
 	data = stbi_load(texture_path, &this->width, &this->height, &this->nr_channels, 0);
-
+	texture = 0;
 }
 /*----- Render Object Related Classess -----*/
 
 //Constructors of base render_object
 render_object::render_object() {
+	VAO = 0;
+	VBO = 0;
 	vertices = 0;
 	color = NULL;
 	normal_buffer = NULL;
 	position_buffer = NULL;
 }
 render_object::render_object(int num_vertices, glm::vec3 position, glm::vec4 color) {
+	VAO = 0;
+	VBO = 0;
 	vertices = num_vertices;
 	position_buffer = new glm::vec3[vertices];
 	this->color = new color_attribute(color, vertices);
@@ -94,7 +100,7 @@ void render_object::set_shader(shader_program shader) {
 equilateral_triangle::equilateral_triangle() {
 	side_len = 0;
 }
-equilateral_triangle::equilateral_triangle(glm::vec3 spawn_position, float side_length) {
+equilateral_triangle::equilateral_triangle(glm::vec3 spawn_position, float side_length) : render_object(3, position, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)){
 	position = spawn_position;
 	side_len = side_length;
 	properties = equilateral_triangle_attributes(side_length);
@@ -106,4 +112,7 @@ void equilateral_triangle::create_position() {
 	position_buffer[0] = glm::vec3(position.x + half_base, position.y - half_height, position.z);
 	position_buffer[1] = glm::vec3(position.x, position.y + half_height, position.z);
 	position_buffer[2] = glm::vec3(position.x - half_base, position.y - half_height, position.z);
+}
+void equilateral_triangle::generate_triangle_buffer() {
+	generate_buffer();
 }

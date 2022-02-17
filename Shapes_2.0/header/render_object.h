@@ -8,9 +8,6 @@
 
 #include"shader.h"
 #include"shape_attributes.h"
-#include"stb_image.h"
-
-#define STB_IMAGE_IMPLEMENTATION
 
 //Color attribute base class
 class color_attribute {
@@ -73,6 +70,7 @@ private:
 public:
 	equilateral_triangle();
 	equilateral_triangle(glm::vec3 spawn_position, float side_length);
+	void generate_triangle_buffer();
 };
 
 #endif //! __RENDER_OBJECT_H__

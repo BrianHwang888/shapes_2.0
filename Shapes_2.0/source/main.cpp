@@ -64,6 +64,10 @@ int main() {
 	float current_frame;
 	//Sets background to light blue color
 	glClearColor(0.529f, 0.807f, 0.92f, 1.0f);
+
+	equilateral_triangle triangle(glm::vec3(0.0f, 0.0f, 0.0f), 10.0f);
+	triangle.generate_triangle_buffer();
+
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
