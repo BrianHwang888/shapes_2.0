@@ -70,7 +70,7 @@ private:
 	void create_position();
 public:
 	equilateral_triangle();
-	equilateral_triangle(glm::vec3 spawn_position, float side_length);
+	equilateral_triangle(shader_program& program, glm::vec3 spawn_position, float side_length);
 	void generate_triangle_buffer();
 	void draw_triangle();
 };

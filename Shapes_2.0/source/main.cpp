@@ -5,6 +5,7 @@
 
 #include"../header/camera.h"
 #include"../header/render_object.h"
+#include"../header/light.h"
 
 //Inital window height and width
 #define WINDOW_WIDTH 800
@@ -60,12 +61,18 @@ int main() {
 	const char* shader_paths[2] = { "source/shader/basic_vertex.glsl", "source/shader/basic_fragment.glsl" }; //basic vertex and fragment shader paths
 	basic_program = new shader_program(shader_paths[0], shader_paths[1]);
 
-	
 	float current_frame;
 	//Sets background to light blue color
 	glClearColor(0.529f, 0.807f, 0.92f, 1.0f);
 
-	equilateral_triangle triangle(glm::vec3(0.0f, 0.0f, 0.0f), 10.0f);
+	light main_light(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.1f, 0.5f);
+	
+	glm::mat4 projection = glm::perspective(glm::radians(main_camera.zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 model(1.0f);
+
+	equilateral_triangle triangle(*basic_program, glm::vec3(0.0f, 0.0f, 0.0f), 10.0f);
+	int shininess = 32;
+	
 	triangle.generate_triangle_buffer();
 
 	while (!glfwWindowShouldClose(window)) {
@@ -77,6 +84,20 @@ int main() {
 		delta_time = current_frame - last_frame;
 		last_frame = current_frame;
 		process_input(window); 
+		
+		basic_program->set_vec3("light_position", main_light.position);
+		basic_program->set_vec3("light_color", main_light.color);
+		basic_program->set_float("ambient_stren", main_light.ambient_str);
+		basic_program->set_float("specular_stren", main_light.specular_str);
+
+		basic_program->set_vec3("viewer_position", main_camera.position);
+		basic_program->set_mat4("view", main_camera.get_view_matrix());
+		basic_program->set_mat4("projection", projection);
+
+		basic_program->set_mat4("model", model);
+		basic_program->set_int("shininess", shininess);
+
+		triangle.draw_triangle();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

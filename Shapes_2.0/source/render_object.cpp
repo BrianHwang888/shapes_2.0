@@ -66,7 +66,7 @@ void render_object::create_normal() {
 	glm::vec3 u, v, normal;
 	for (int i = 0; i < total_vertices; i += 3) {
 		u = position_buffer[i + 1] - position_buffer[i];
-		v = position_buffer[1 + 2] - position_buffer[i];
+		v = position_buffer[i + 2] - position_buffer[i];
 		normal = glm::normalize(glm::cross(u, v));
 
 		normal_buffer[i] = normal;
@@ -92,10 +92,10 @@ void render_object::generate_buffer() {
 	vertex_normal = glGetAttribLocation(shader.ID, "vNormal");
 	vertex_color = glGetAttribLocation(shader.ID, "vColor");
 
-	glBufferData(GL_ARRAY_BUFFER, total_vertices, NULL, GL_STATIC_DRAW);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, total_vertices * sizeof(glm::vec3), position_buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, total_vertices * sizeof(glm::vec3), total_vertices * sizeof(glm::vec4), color->get_color_buffer());
-	glBufferSubData(GL_ARRAY_BUFFER, total_vertices * (sizeof(glm::vec3) + sizeof(glm::vec4)), total_vertices * sizeof(glm::vec3), normal_buffer);
+	glBufferData(GL_ARRAY_BUFFER, total_vertices * vertex_data_size, NULL, GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, total_vertices * sizeof(glm::vec3), (void*)position_buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, total_vertices * sizeof(glm::vec3), total_vertices * sizeof(glm::vec4), (void*)color->get_color_buffer());
+	glBufferSubData(GL_ARRAY_BUFFER, total_vertices * (sizeof(glm::vec3) + sizeof(glm::vec4)), total_vertices * sizeof(glm::vec3), (void*)normal_buffer);
 
 	glVertexAttribPointer(vertex_position, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 	glVertexAttribPointer(vertex_color, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)(total_vertices * sizeof(glm::vec3)));
@@ -119,7 +119,7 @@ void render_object::set_shader(shader_program shader) {
 equilateral_triangle::equilateral_triangle() {
 	side_len = 0;
 }
-equilateral_triangle::equilateral_triangle(glm::vec3 spawn_position, float side_length) : render_object(3, position, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)){
+equilateral_triangle::equilateral_triangle(shader_program& program, glm::vec3 spawn_position, float side_length) : render_object(3, position, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), program){
 	position = spawn_position;
 	side_len = side_length;
 	properties = equilateral_triangle_attributes(side_length);
