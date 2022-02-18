@@ -42,7 +42,7 @@ private:
 	void set_shader(shader_program shader);
 
 protected:
-	int vertices;
+	int total_vertices;
 	glm::vec3 position;
 	
 	glm::vec3* position_buffer;
@@ -54,11 +54,12 @@ protected:
 	glm::mat4 model;
 
 	render_object();
-	render_object(int num_vertices, glm::vec3 position, glm::vec4 color);
+	render_object(int num_vertices, glm::vec3& position, glm::vec4 color);
+	render_object(int num_vertices, glm::vec3& position, glm::vec4 color, shader_program& program);
 	void generate_buffer();
 	virtual void create_color();
 	virtual void create_normal();
-
+	void draw();
 };
 
 class equilateral_triangle : public render_object {
@@ -71,6 +72,7 @@ public:
 	equilateral_triangle();
 	equilateral_triangle(glm::vec3 spawn_position, float side_length);
 	void generate_triangle_buffer();
+	void draw_triangle();
 };
 
 #endif //! __RENDER_OBJECT_H__
