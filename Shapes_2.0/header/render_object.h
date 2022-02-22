@@ -60,6 +60,9 @@ protected:
 	virtual void create_color();
 	virtual void create_normal();
 	void draw();
+
+public:
+	glm::mat4 get_model_matrix();
 };
 
 class equilateral_triangle : public render_object {
@@ -75,4 +78,16 @@ public:
 	void draw_triangle();
 };
 
+class square : public render_object {
+private:
+	float side_len;
+	void create_position();
+
+public:
+	square();
+	square(shader_program& shader_program, float side_length);
+	square(shader_program& shader_program, glm::vec3 spawn_position, float side_length);
+	void generate_square_buffer();
+	void draw_square();
+};
 #endif //! __RENDER_OBJECT_H__

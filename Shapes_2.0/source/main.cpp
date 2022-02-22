@@ -71,10 +71,11 @@ int main() {
 	glm::mat4 model(1.0f);
 
 	equilateral_triangle triangle(*basic_program, glm::vec3(0.0f, 0.0f, 0.0f), 10.0f);
+	square wall(*basic_program, glm::vec3(1.0f, 0.0f, 0.0f), 5.0f);
 	int shininess = 32;
 	
 	triangle.generate_triangle_buffer();
-
+	wall.generate_square_buffer();
 	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
@@ -94,10 +95,12 @@ int main() {
 		basic_program->set_mat4("view", main_camera.get_view_matrix());
 		basic_program->set_mat4("projection", projection);
 
-		basic_program->set_mat4("model", model);
+		basic_program->set_mat4("model", triangle.get_model_matrix());
 		basic_program->set_int("shininess", shininess);
-
 		triangle.draw_triangle();
+
+		basic_program->set_mat4("model", wall.get_model_matrix());
+		wall.draw_square();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

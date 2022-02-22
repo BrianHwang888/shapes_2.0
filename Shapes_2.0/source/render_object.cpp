@@ -114,7 +114,10 @@ void render_object::draw() {
 void render_object::set_shader(shader_program shader) {
 	this->shader = shader;
 }
-
+//Getters
+glm::mat4 render_object::get_model_matrix() {
+	return model;
+}
 /*----- Equilateral Triangle Definitions -----*/
 equilateral_triangle::equilateral_triangle() {
 	side_len = 0;
@@ -136,5 +139,35 @@ void equilateral_triangle::generate_triangle_buffer() {
 	generate_buffer();
 }
 void equilateral_triangle::draw_triangle() {
+	draw();
+}
+
+/*----- Square Definitions -----*/
+square::square() {
+	side_len = 0;
+}
+square::square(shader_program& program, glm::vec3 spawn_position, float side_length) : render_object(6, position, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), program) {
+	position = spawn_position;
+	side_len = side_length;
+
+}
+square::square(shader_program& program, float side_length) : render_object(6, position, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), program) {
+	position = glm::vec3(0.0f, 0.0f, 0.0f);
+	side_len = side_length;
+}
+void square::create_position() {
+	float half_len = side_len / 2;
+
+	position_buffer[0] = glm::vec3(position.x - half_len, position.y + half_len, position.z);
+	position_buffer[1] = glm::vec3(position.x - half_len, position.y - half_len, position.z);
+	position_buffer[2] = glm::vec3(position.x + half_len, position.y + half_len, position.z);
+	position_buffer[3] = glm::vec3(position.x + half_len, position.y - half_len, position.z);
+	position_buffer[4] = glm::vec3(position.x + half_len, position.y + half_len, position.z);
+	position_buffer[5] = glm::vec3(position.x - half_len, position.y - half_len, position.z);
+}
+void square::generate_square_buffer() {
+	generate_buffer();
+}
+void square::draw_square() {
 	draw();
 }

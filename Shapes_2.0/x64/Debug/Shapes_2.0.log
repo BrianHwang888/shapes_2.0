@@ -1,2 +1,5 @@
-﻿  render_object.cpp
+﻿  main.cpp
+C:\Users\potatoe\source\repos\Shapes_2.0\Shapes_2.0\source\main.cpp(84,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\potatoe\source\repos\Shapes_2.0\Shapes_2.0\source\main.cpp(162,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\potatoe\source\repos\Shapes_2.0\Shapes_2.0\source\main.cpp(162,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Shapes_2.0.vcxproj -> C:\Users\potatoe\source\repos\Shapes_2.0\x64\Debug\Shapes_2.0.exe
