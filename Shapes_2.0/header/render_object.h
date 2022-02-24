@@ -75,6 +75,8 @@ public:
 	void set_rotation_matrix(glm::mat4& new_rotation_mat);
 	void set_translation_matrix(glm::mat4& new_translation_mat);
 	void set_scaling_matrix(glm::mat4& new_scaling_mat);
+
+	void apply_transformations();
 };
 
 class equilateral_triangle : public render_object {

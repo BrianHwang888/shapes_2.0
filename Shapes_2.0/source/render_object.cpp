@@ -110,6 +110,9 @@ void render_object::draw() {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, total_vertices);
 }
+void render_object::apply_transformations() {
+	model = scaling * translation * rotation;
+}
 //Setters
 void render_object::set_shader(shader_program& shader) {
 	this->shader = shader;
