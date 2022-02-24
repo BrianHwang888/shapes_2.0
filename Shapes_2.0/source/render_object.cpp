@@ -111,13 +111,36 @@ void render_object::draw() {
 	glDrawArrays(GL_TRIANGLES, 0, total_vertices);
 }
 //Setters
-void render_object::set_shader(shader_program shader) {
+void render_object::set_shader(shader_program& shader) {
 	this->shader = shader;
 }
+void render_object::set_model_matrix(glm::mat4& new_model_mat) {
+	model = new_model_mat;
+}
+void render_object::set_rotation_matrix(glm::mat4& new_rotation_mat) {
+	rotation = new_rotation_mat;
+}
+void render_object::set_translation_matrix(glm::mat4& new_translation_mat) {
+	translation = new_translation_mat;
+}
+void render_object::set_scaling_matrix(glm::mat4& new_scaling_mat) {
+	scaling = new_scaling_mat;
+}
+
 //Getters
 glm::mat4 render_object::get_model_matrix() {
 	return model;
 }
+glm::mat4 render_object::get_rotation_matrix() {
+	return rotation;
+}
+glm::mat4 render_object::get_translation_matrix() {
+	return translation;
+}
+glm::mat4 render_object::get_scaling_matrix() {
+	return scaling;
+}
+
 /*----- Equilateral Triangle Definitions -----*/
 equilateral_triangle::equilateral_triangle() {
 	side_len = 0;

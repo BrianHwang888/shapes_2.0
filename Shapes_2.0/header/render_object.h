@@ -39,7 +39,7 @@ public:
 class render_object {
 private:
 	virtual void create_position() = 0;
-	void set_shader(shader_program shader);
+	void set_shader(shader_program& shader);
 
 protected:
 	int total_vertices;
@@ -51,7 +51,11 @@ protected:
 	shader_program shader;
 	GLuint VAO;
 	GLuint VBO;
+
 	glm::mat4 model;
+	glm::mat4 rotation;
+	glm::mat4 translation;
+	glm::mat4 scaling;
 
 	render_object();
 	render_object(int num_vertices, glm::vec3& position, glm::vec4 color);
@@ -63,6 +67,14 @@ protected:
 
 public:
 	glm::mat4 get_model_matrix();
+	glm::mat4 get_rotation_matrix();
+	glm::mat4 get_translation_matrix();
+	glm::mat4 get_scaling_matrix();
+
+	void set_model_matrix(glm::mat4& new_model_mat);
+	void set_rotation_matrix(glm::mat4& new_rotation_mat);
+	void set_translation_matrix(glm::mat4& new_translation_mat);
+	void set_scaling_matrix(glm::mat4& new_scaling_mat);
 };
 
 class equilateral_triangle : public render_object {
