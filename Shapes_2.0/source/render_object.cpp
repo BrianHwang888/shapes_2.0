@@ -113,6 +113,21 @@ void render_object::draw() {
 void render_object::apply_transformations() {
 	model = scaling * translation * rotation;
 }
+
+//Getters
+glm::mat4 render_object::get_model_matrix() {
+	return model;
+}
+glm::mat4 render_object::get_rotation_matrix() {
+	return rotation;
+}
+glm::mat4 render_object::get_translation_matrix() {
+	return translation;
+}
+glm::mat4 render_object::get_scaling_matrix() {
+	return scaling;
+}
+
 //Setters
 void render_object::set_shader(shader_program& shader) {
 	this->shader = shader;
@@ -130,20 +145,15 @@ void render_object::set_scaling_matrix(glm::mat4& new_scaling_mat) {
 	scaling = new_scaling_mat;
 }
 
-//Getters
-glm::mat4 render_object::get_model_matrix() {
-	return model;
+void render_object::rotate(float angle, glm::vec3 axis) {
+	rotation = glm::rotate(glm::mat4(), glm::radians(angle), axis);
 }
-glm::mat4 render_object::get_rotation_matrix() {
-	return rotation;
+void render_object::translate(glm::vec3 point) {
+	translation = glm::translate(glm::mat4(), point);
 }
-glm::mat4 render_object::get_translation_matrix() {
-	return translation;
+void render_object::scale(float size) {
+	scaling = glm::scale(glm::mat4(), glm::vec3(size));
 }
-glm::mat4 render_object::get_scaling_matrix() {
-	return scaling;
-}
-
 /*----- Equilateral Triangle Definitions -----*/
 equilateral_triangle::equilateral_triangle() {
 	side_len = 0;

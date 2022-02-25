@@ -76,6 +76,10 @@ public:
 	void set_translation_matrix(glm::mat4& new_translation_mat);
 	void set_scaling_matrix(glm::mat4& new_scaling_mat);
 
+	void rotate(float angle, glm::vec3 axis);
+	void translate(glm::vec3 point);
+	void scale(float size);
+
 	void apply_transformations();
 };
 

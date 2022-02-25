@@ -1,4 +1,4 @@
 Simple shape rendering program based on previous shape program
 
 Changes:
-	- added "apply_transformation" to "render_object"
+	- added rotate, tranlate, scale function to render_object
